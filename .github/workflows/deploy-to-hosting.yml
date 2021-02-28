@@ -26,5 +26,5 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           source: "site/*"
-          target: "scripsi"
+          target: ""
           strip_components: 1
