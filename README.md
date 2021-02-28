@@ -39,3 +39,5 @@ git push
 The website is compiled and copied to the web hosting by a GitHub Action.
 
 The action is configured in `.github/workflows/deploy-to-hosting.yml`
+
+The settings are stored in the GitHub repository's settings -> secrets
