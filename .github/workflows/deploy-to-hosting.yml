@@ -7,11 +7,15 @@ jobs:
       - name: checkout a copy of the repository
         uses: actions/checkout@master
 
-      - name: compile the website files
+      - name: setup python
         uses: actions/setup-python@v2
         with:
           python-version: 3.x
+
+      - name: install mkdocs and the material theme
         run: pip install mkdocs-material
+
+      - name: build the website files
         run: mkdocs build
 
       - name: deploy the website to scripsi.uk
