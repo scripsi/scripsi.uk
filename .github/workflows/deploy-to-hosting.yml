@@ -27,4 +27,3 @@ jobs:
           port: ${{ secrets.PORT }}
           localDir: "site"
           remoteDir: ""
-          dryRun: true
