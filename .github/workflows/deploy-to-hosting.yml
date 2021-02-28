@@ -25,6 +25,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
+          debug: true
           source: "README.md"
-          target: "./"
+          target: ""
           # strip_components: 1
