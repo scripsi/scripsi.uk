@@ -4,10 +4,8 @@ My name is __Douglas Reed__
 
 This is where I write about:
 
-Art
+[Science](science/)
 
-Science
+[Computers and Technology](tech/)
 
-[Cooking](cook/recipes/)
-
-Computers and Technology
+[Cooking](cook/)
