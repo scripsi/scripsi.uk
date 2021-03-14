@@ -1,4 +1,8 @@
 site_name: Scripsi
+site_author: Douglas Reed
+site_description: Writing about science, technology and cooking
+copyright: Copyright &copy; 2021 Douglas Reed
+
 theme:
   name: material
   palette:
@@ -7,7 +11,11 @@ theme:
     accent: teal
   icon:
     logo: material/feather
+  features:
+    - navigation.tabs
+    - toc.integrate
 
 markdown_extensions:
   - admonition
+  - attr_list
   - pymdownx.superfences
