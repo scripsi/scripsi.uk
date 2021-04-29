@@ -60,4 +60,6 @@ __Don't knead - Fold!__ To fold dough, lift up one side of the ball of dough wit
 
 Don't stress too much about trying to make the perfect, Instagrammable loaf. Bread is made for eating, not looking at. Professional bakers have all sort of specialist dough mixing and shaping equipment, and heated-floor, steam-injection ovens to make their products look perfect. You can't replicate that in your home kitchen, so don't even try.
 
-The bread you make will be _your_ bread - unique and exclusive to you, and not available from anywhere else. Fresh out of your own oven, it will be more rewarding and taste better than anything you can buy. Enjoy!
+The bread you make will be _your_ bread - unique and exclusive to you, and not available from anywhere else. Fresh out of your own oven, it will be more rewarding and taste better than anything you can buy.
+
+Enjoy!

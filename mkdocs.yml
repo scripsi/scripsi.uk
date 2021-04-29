@@ -5,6 +5,7 @@ copyright: Copyright &copy; 2021 Douglas Reed
 
 theme:
   name: material
+  custom_dir: custom-theme
   palette:
     scheme: default
     primary: blue grey
@@ -18,4 +19,10 @@ theme:
 markdown_extensions:
   - admonition
   - attr_list
+  - smarty
   - pymdownx.superfences
+  - pymdownx.smartsymbols
+
+plugins:
+    - search
+    - img2fig
