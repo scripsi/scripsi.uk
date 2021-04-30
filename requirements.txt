@@ -1,0 +1,4 @@
+mkdocs-material
+mkdocs-section-index
+mkdocs-img2fig-plugin
+mkdocs-literate-nav

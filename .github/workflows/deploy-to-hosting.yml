@@ -16,7 +16,7 @@ jobs:
           python-version: 3.x
 
       - name: install mkdocs and the material theme
-        run: pip install mkdocs-material
+        run: pip3 install -r requirements.txt
 
       - name: build the website files
         run: mkdocs build
