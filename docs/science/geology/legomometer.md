@@ -84,7 +84,7 @@ In the early morning, there were few noticeable vibrations, as very little traff
 
 ## Timing issues
 
-I wanted to go further than just showing that the vibrations were there, by trying to link the spikes on the chart with observations of individual vehicles passing the building. To do that, I would have to accurately synchronise the timing of my observations with the timing of measurements made by the seismometer. But there was clearly a problem with the time-keeping of the data logged to the SeismicPi board.
+I wanted to go further than just showing that the vibrations were there, by trying to link the spikes on the chart with observations of individual vehicles passing the building. To do that, I would have to accurately synchronise the timing of my observations with the timing of measurements made by the seismometer. But there was clearly a problem with the time-keeping of the data logged by the SeismicPi board.
 
 Look carefully at the full day plot above: I had set the board to record data for a full day between 00:00:00 and 23:59:59, but the trace stops short on the last line by a few minutes. After a bit of testing I realised that this was because the board was using a slightly slower sample rate than I was expecting. I had asked it to take samples 50 times every second, but due to a slight timing error in the hardware of the board it was only taking 49.77193 samples per second. Over the course of a full day, that slight error compounded into 19,700 (about 6.3 minutes worth) fewer samples than expected! Once I had realised this, I was able to adjust the sample rate in *ObsPy* to compensate and make sure that the timing was correct.
 
