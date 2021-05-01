@@ -76,6 +76,7 @@ The site uses a number of plugins for MkDocs:
 [https://oprypin.github.io/mkdocs-section-index/](https://oprypin.github.io/mkdocs-section-index/)
 
 Standard MkDocs does not automatically make a default page for a section heading (directory). This plugin fixes that by automatically setting README.md or index.md as the default page for a section. It's important to create an index.md in every directory if you use this plugin, otherwise the first normal page in the directory will be turned into the section page and lose it's own headed entry in the navigation.
+
 ### mkdocs-literate-nav
 
 [https://github.com/oprypin/mkdocs-literate-nav](https://github.com/oprypin/mkdocs-literate-nav)
@@ -89,10 +90,10 @@ This lets you override the automatically generated navigation in sections of the
 This converts image links in the markdown into figures with captions in the html output. The images must be defined like this:
 
 ```markdown
-![caption text](/absolute/path/to/image.jpg)
+![caption text](path/to/image.jpg)
 ```
 
-Unfortunately, a [bug in img2fig](https://github.com/stuebersystems/mkdocs-img2fig-plugin/issues/4) means that relative image paths cannot be used if the default setting `use_directory_urls: true` is in `mkdocs.yml`. Use absolute paths from the root of `docs/`
+Unfortunately, a [bug in img2fig](https://github.com/stuebersystems/mkdocs-img2fig-plugin/issues/4) means that relative image paths cannot be used if the default setting `use_directory_urls: true` is in `mkdocs.yml`. Either set to false or use absolute paths from the root of `docs/` for images.
 
 ## Github Action
 
