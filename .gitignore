@@ -1,4 +1,5 @@
 site/
 dev/
 .venv/
+.vscode/
 

@@ -19,13 +19,17 @@ Well how about a Raspberry Pi interface and datalogger thrown in for free? A dis
 
 The kit was designed for use with the [British Geological Survey](https://www.bgs.ac.uk/)'s *UK Schools Seismology Project* which ran from 2006-2019. It is a kit of genuine Lego bricks with some additional non-Lego parts to make a working seismometer capable of detecting vibrations from about 1 Hz up to 25 Hz. The design is basically a spring-loaded and counterweighted horizontal arm holding a powerful magnet floating within a fixed wire coil. When the seismometer is vibrated, the momentum of the counterweight holds the magnet in place while the coil moves up and down past it and generates a tiny electric current that can be measured.
 
+![The silver magnet inside the copper coil, with the black counterweight above (the counterweight has been adjusted to make the magnet more visible for this picture - normally the top surface of the magnet should be level with the top of the coil)](legomometer-01a.jpg)
+
 The bundled SeismicPi interface connects to the coil to amplify the tiny electrical signal and digitise it into measurements that can be read by a computer. It does this by sampling the coil's voltage many times a second and converting those voltages into numbers that can be plotted against time to create a waveform. The principle is very much like that used to record sound into a computer from a microphone - in fact some seismometers even use a device called a [geophone](https://en.wikipedia.org/wiki/Geophone).
 
 ## Building the Legomometer
 
-The kit arrived quickly and was very easy to assemble using the included instructions. It's not the last word in sophisticated Lego design, but it gets the job done using a relatively small number of parts, and the non-Lego components are cleverly worked into the model. I particularly liked the use of a perfectly-sized tiny magnet pressed into the base of a single round stud, and the way that the sprung steel plate is held securely in place while still allowing it to be adjustable. The ready-made hinge pieces were a nice touch - it would have been very difficult to get exactly the right spacing, otherwise.
+The kit arrived quickly and was very easy to assemble using the included instructions. The Lego design is fairly basic, but it gets the job done using a relatively small number of parts, and the non-Lego components are cleverly worked into the model. I particularly liked the use of a perfectly-sized tiny magnet pressed into the base of a single round stud, and the way that the sprung steel plate is held securely in place while still allowing it to be adjustable. The ready-made hinge pieces were a nice touch - it would have been very difficult to get exactly the right spacing, otherwise.
 
 The custom-made coil assembly is shaped to press fit onto the Lego baseplate, but my one doesn't stay on very firmly and is easy to pull out of position - I might have to use a bit of glue (shh, don't tell) to fix it in place. The supplied cable plugs into the coil assembly using a normal 3.5mm headphone jack. The counterweight is just a heavy flat plate of steel resting on top of the arm, and you slide it forward or backward to adjust until the magnet is just floating at the right height within the coil --- it's a simple and intuitive design. To finish things off, a nice, clear acrylic dome sits over the whole instrument to protect it from air movements.
+
+![Building the Legomometer - almost finished!](legomometer-01.jpg)
 
 The whole thing takes about 30 minutes to put together and, when finished, is a compact and reasonably portable device. The dayglo orange, purple and black colour scheme takes a bit of getting used to, though!
 
@@ -49,11 +53,13 @@ The sitting room mantlepiece isn't a very convenient place to set up a computer 
 
 ## Visualising the data
 
-If you are using *jAmaSeis*, then there's not much to do to display the data --- the main screen shows the trace as it's being recorded, and there are only a few restricted controls for formatting it before you capture an image using a screenshot. I wanted a bit more control over the final results than that, because I was going to use them in a published report.
+If you are using *jAmaSeis*, then there's not much to do to display the data --- the main screen shows the trace as it's being recorded, and there are only a few restricted controls for formatting it before you capture a screenshot. I wanted a bit more control over the final results than that, because I was going to use them in a published report.
+
+![An example plot from jAmaseis](legomometer02a.png)
 
 The data logged to the memory card on the SeismicPi is in a special format that needs to be converted into something more useful by a script written in the Python programming language. Starting with this, I have been extending and building a set of Python tools for analysing and displaying the data from the SeismicPi in a more useful form. These tools will shortly be available on my [GitHub site](https://github.com/scripsi/legomometer). They rely on a very helpful Python library called *[ObsPy](https://github.com/obspy/obspy/wiki)*, which has been written especially for analysing seismometer data. A basic plot from *ObsPy* looks like this:
 
-![A basic plot of seismometer data](legomometer-03.png)
+![A basic plot from ObsPy](legomometer-03.png)
 
 While you can see spikes in the trace due to vibration, there is a lot of noise in the basic signal, which hides some of the smaller spikes, and the values are offset from zero. The offset is just due to a small DC voltage in the measurement circuit and is easy to correct for. The noise is mainly due to the large amount of amplification being used to detect the seismometer's signal --- it also amplifies unwanted electrical interference --- but this is also easy to remove using a bandpass filter. *ObsPy* can treat the measurements a bit like a sound wave and filter out frequencies that are too high or too low to be of interest. After filtering and correcting the offset, the same plot looks like this:
 
@@ -84,9 +90,9 @@ In the early morning, there were few noticeable vibrations, as very little traff
 
 ## Timing issues
 
-I wanted to go further than just showing that the vibrations were there, by trying to link the spikes on the chart with observations of individual vehicles passing the building. To do that, I would have to accurately synchronise the timing of my observations with the timing of measurements made by the seismometer. But there was clearly a problem with the time-keeping of the data logged by the SeismicPi board.
+I wanted to go further than just showing that the vibrations were there, by trying to link the spikes on the chart with observations of individual vehicles passing the building. To do that, I would have to accurately synchronise the timing of my traffic observations with the timing of measurements made by the seismometer. But there was clearly a problem with the time-keeping of the data logged by the SeismicPi board.
 
-Look carefully at the full day plot above: I had set the board to record data for a full day between 00:00:00 and 23:59:59, but the trace stops short on the last line by a few minutes. After a bit of testing I realised that this was because the board was using a slightly slower sample rate than I was expecting. I had asked it to take samples 50 times every second, but due to a slight timing error in the hardware of the board it was only taking 49.77193 samples per second. Over the course of a full day, that slight error compounded into 19,700 (about 6.3 minutes worth) fewer samples than expected. Once I had realised this, I was able to adjust the sample rate in *ObsPy* to compensate and make sure that the timing was correct.
+Look carefully again at the full day plot above: I had set the board to record data for a full day between 00:00:00 and 23:59:59, but the trace stops short on the last line by a few minutes. After a bit of testing I realised that this was because the board was using a slightly slower sample rate than I was expecting. I had asked it to take samples 50 times every second, but due to a slight timing error in the hardware of the board it was only taking 49.77193 samples per second. Over the course of a full day, that slight error compounded into 19,700 (about 6.3 minutes worth) fewer samples than expected. Once I had realised this, I was able to adjust the sample rate in *ObsPy* to compensate and make sure that the timing was correct.
 
 Another, smaller timing issue was caused by the Real-Time Clock (RTC) on the SeismicPi board. This is a separate, battery-powered timer which maintains the current date and time, and which is used to trigger the start and finish of each measuring session. This clock was also not terribly accurate, running fast by a few seconds per day. For the measurement durations that I was using (up to 24 hours) this wasn't too much of a problem --- I simply reset the clock just before each measurement session --- but it could be an issue when taking measurements over longer periods of weeks or months.
 
@@ -128,7 +134,7 @@ So, using a simple, educational seismometer kit and a fair bit of time and progr
 
 There are plenty of ways in which this project could be extended, though. *ObsPy* can be used to detect when peaks in the trace go above a certain threshold level, making it possible to automatically count the frequency of vibration events. It would be interesting to see how these events are affected by bus timetable changes, local diversions, seasonal changes in traffic etc.
 
-It would also be nice to see if measurements could be compared from different points within the building to see how the vibrations vary with height or distance from the road. To do that reliably might take a bit of Lego redesign, because at the moment it is too easy to displace the counterweight and magnets when moving the device around, and that will have an effect on the magnitude of electrical signals from the coil.
+It would also be nice to see if measurements could be compared from different points within the building to see how the vibrations vary with height or distance from the road. To do that reliably might take a bit of Lego redesign, because at the moment it is too easy to displace the counterweight and magnet when moving the device around, and that will have an effect on the magnitude of electrical signals from the coil.
 
 Finally, different types and sizes of vehicle may cause different magnitudes and durations of vibration, and it would be interesting to try and measure these differences. The newer, bigger hybrid buses with heavy batteries in them certainly seem to make the building shudder more as they pass, but it would be good to demonstrate that.
 
