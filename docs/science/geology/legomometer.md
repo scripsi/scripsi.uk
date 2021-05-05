@@ -2,7 +2,7 @@
 
 The old building that I live in is shuddering noticeably every time a bus or heavy vehicle goes past, due to the poor state of the road outside. It's got to the point that I and other residents want the local council to do something about it, so I decided to indulge in a bit of citizen science to make our argument more persuasive.
 
-Looking for ways to measure vibrations within my flat, I explored several options:
+Looking for ways to measure vibrations within my flat, I considered several options:
 
 - Apps that use a phone's inbuilt accelerometer, eg [Vibration Meter](https://play.google.com/store/apps/details?id=kr.sira.vibration)
 - Accelerometers connected to Arduino or Raspberry Pi eg [Raspberry Pi Sense Hat](https://www.raspberrypi.org/products/sense-hat/)
@@ -49,13 +49,15 @@ So instead, I placed the seismometer on the stone mantle in our sitting room. Th
 
 ## Recording the measurements
 
-The sitting room mantlepiece isn't a very convenient place to set up a computer for taking long-term measurements! Fortunately, the SeismicPi interface can also log its measurements to a memory card without needing to be tethered to a computer. Getting this working was a surprisingly difficult process (to avoid getting too technical here, I'll describe all the gory details in another article). In general, I recommend sticking with recording direct to a computer using the *jAmaSeis* software if you can. But with a bit of trial and error and some Python programming knowledge it is possible to get the datalogging working if you need it. I was able to set scheduled start and stop times for each sampling run, so I could simply leave the seismometer running for a day at a time and then examine the captured data at my leisure. A standard microSD memory card would have enough capacity for many months of data if necessary (though see my points about timing below).
+The sitting room mantlepiece isn't a very convenient place to set up a computer for taking long-term measurements! Fortunately, the SeismicPi interface can also log its measurements to a memory card without needing to be tethered to a computer. Getting this working was a surprisingly difficult process (to avoid getting too technical here, I'll describe all the gory details in another article).
+
+In general, I recommend sticking with recording direct to a computer using the *jAmaSeis* software if you can. But with a bit of trial and error and some Python programming knowledge it is possible to get the datalogging working if you need it. I was able to set scheduled start and stop times for each sampling run, so I could simply leave the seismometer running for a day at a time and then examine the captured data at my leisure. A standard microSD memory card would have enough capacity for many months of data if necessary (though see my points about timing below).
 
 ## Visualising the data
 
 If you are using *jAmaSeis*, then there's not much to do to display the data --- the main screen shows the trace as it's being recorded, and there are only a few restricted controls for formatting it before you capture a screenshot. I wanted a bit more control over the final results than that, because I was going to use them in a published report.
 
-![An example plot from jAmaseis](legomometer02a.png)
+![An example plot from jAmaseis](legomometer-02a.png)
 
 The data logged to the memory card on the SeismicPi is in a special format that needs to be converted into something more useful by a script written in the Python programming language. Starting with this, I have been extending and building a set of Python tools for analysing and displaying the data from the SeismicPi in a more useful form. These tools will shortly be available on my [GitHub site](https://github.com/scripsi/legomometer). They rely on a very helpful Python library called *[ObsPy](https://github.com/obspy/obspy/wiki)*, which has been written especially for analysing seismometer data. A basic plot from *ObsPy* looks like this:
 
@@ -76,7 +78,7 @@ The spikes caused by the vibrations are now much more distinct.
 
     - Filter Data: **Enable**
     
-    - Low-Pass Period Seconds: **1** 
+    - Low-Pass Period Seconds: **1**
     
     - Offset: (adjust until trace is centred on blue axis)
     
@@ -92,7 +94,7 @@ In the early morning, there were few noticeable vibrations, as very little traff
 
 I wanted to go further than just showing that the vibrations were there, by trying to link the spikes on the chart with observations of individual vehicles passing the building. To do that, I would have to accurately synchronise the timing of my traffic observations with the timing of measurements made by the seismometer. But there was clearly a problem with the time-keeping of the data logged by the SeismicPi board.
 
-Look carefully again at the full day plot above: I had set the board to record data for a full day between 00:00:00 and 23:59:59, but the trace stops short on the last line by a few minutes. After a bit of testing I realised that this was because the board was using a slightly slower sample rate than I was expecting. I had asked it to take samples 50 times every second, but due to a slight timing error in the hardware of the board it was only taking 49.77193 samples per second. Over the course of a full day, that slight error compounded into 19,700 (about 6.3 minutes worth) fewer samples than expected. Once I had realised this, I was able to adjust the sample rate in *ObsPy* to compensate and make sure that the timing was correct.
+Look carefully again at the full day plot above: I had set the board to record data for a full day between 00:00:00 and 23:59:59, but the trace stops short on the last line by a few minutes. After a bit of testing I discovered that this was because the board was using a slightly slower sample rate than I was expecting. I had asked it to take samples 50 times every second, but due to a slight timing error in the hardware of the board it was only taking 49.77193 samples per second. Over the course of a full day, that slight error compounded into 19,700 (about 6.3 minutes worth) fewer samples than expected! Once I had realised this, I was able to adjust the sample rate in *ObsPy* to compensate and make sure that the timing was correct.
 
 Another, smaller timing issue was caused by the Real-Time Clock (RTC) on the SeismicPi board. This is a separate, battery-powered timer which maintains the current date and time, and which is used to trigger the start and finish of each measuring session. This clock was also not terribly accurate, running fast by a few seconds per day. For the measurement durations that I was using (up to 24 hours) this wasn't too much of a problem --- I simply reset the clock just before each measurement session --- but it could be an issue when taking measurements over longer periods of weeks or months.
 
