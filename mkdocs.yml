@@ -3,8 +3,6 @@ site_author: Douglas Reed
 site_description: Writing about science, technology and cooking
 copyright: Copyright &copy; 2021 Douglas Reed
 
-use_directory_urls: false
-
 theme:
   name: material
   custom_dir: custom-theme
@@ -22,6 +20,7 @@ markdown_extensions:
   - admonition
   - attr_list
   - smarty
+  - meta
   - pymdownx.superfences
   - pymdownx.smartsymbols
 
