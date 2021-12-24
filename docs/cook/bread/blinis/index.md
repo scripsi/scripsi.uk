@@ -2,12 +2,12 @@
 
 ## Ingredients
 
-* 300 grams strong bread flour
-* 3/4 tsp salt
-* 1 1/2 tsp dried instant yeast
-* 3 large eggs, separated
-* 200 grams sour cream
-* 375 grams milk
+* 400 grams strong bread flour
+* 1 tsp salt
+* 2 tsp dried instant yeast
+* 4 large eggs, separated
+* 300 grams sour cream
+* 450 grams milk
 * unsalted butter for frying
 
 ## Method
