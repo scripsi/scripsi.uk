@@ -23,9 +23,9 @@ Other recipes start with this basic formula and usually only vary the liquid:
 
 * 250g water and 30g olive oil - pitta breads
 
-* 230g water and 30g malt syrup - bagels
+* 230g water and 30g malt syrup - [bagels](../bagels/index.md)
 
-* 150g water and 150g yoghurt - naan
+* 150g water and 150g yoghurt - [naan](../naan/index.md)
 
 ## Method
 
@@ -35,7 +35,7 @@ This is a handful of helpful tips, rather than a strict method!
 
 You don't need a lot of special equipment to make bread, but a few things help:
 
-* Plastic dough scraper - A simple D-shaped thin plastic one is the best - the fancy metal ones are less versatile.
+* Dough scraper - A simple D-shaped thin plastic one is the best - the fancy metal ones are less versatile.
 * Mixer - A stand mixer is helpful if you're going to make a lot of bread, but not essential.
 
 ### Weighing ingredients
