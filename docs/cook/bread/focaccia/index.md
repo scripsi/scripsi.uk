@@ -3,6 +3,7 @@
 ## Ingredients
 
 For the dough:
+
 * 400 grams Italian bread flour
 * 1 tsp salt
 * 2 tsp dried instant yeast
@@ -10,6 +11,7 @@ For the dough:
 * 20 grams olive oil
 
 For the second proof:
+
 * 150 grams olive oil
 * 4 garlic cloves, finely chopped
 * bunch of fresh rosemary or sage
@@ -18,7 +20,7 @@ For the second proof:
 ## Method
 
 * Mix the __flour__, __salt__, and __yeast__ together in a large bowl
-* Add the __warm water__ and __olive oil__ mix together into a rough dough
+* Add the __warm water__ and __olive oil__ mix together into a smooth dough
 * Cover and prove for about 1 hour, folding every 20 mins
 * Put the __olive oil__, __garlic__, and __flaked sea salt__ into a separate large bowl, and add some picked __rosemary__ or __sage__ leaves
 * Form the dough into a ball, place it into the bowl with the olive-oil mixture and roll it around to coat it, before leaving it in the mixture to prove for another hour
