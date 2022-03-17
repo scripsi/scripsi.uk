@@ -16,9 +16,11 @@ In response to a World Health Organisation report about the negative health impa
 
 ![Central Edinburgh daytime noise map](measuring-noise01.png)
 
-My home lies in a red-shaded area of the map, so it looks like I should experience noise levels of between 60 and 65 dB, but what does that actually mean? Well, the [FAQ section of the website](https://noise.environment.gov.scot/frequently-asked-questions.html) does a pretty good job of explaining how they made the map. They did _not_ send out an army of people to measure sound levels on every street corner over a long period! Instead, they fed existing data on things like traffic, public transport, industrial sites, building locations and population density into a mathematical model that would predict the expected environmental noise level at any point. The model divided the area up into 10m squares and predicted _Leq_ (_equivalent continuous sound pressure level_) at a point 4m above the ground in the centre of each of those squares. The noise contours on the map are then calculated from those predictions.
+My home lies in a red-shaded area of the map, so it looks like I should experience noise levels of between 60 and 65 dB, but what does that actually mean? Well, the [FAQ section of the website](https://noise.environment.gov.scot/frequently-asked-questions.html) does a pretty good job of explaining how they made the map. They did _not_ send out an army of people to measure sound levels on every street corner over a long period! Instead, they fed existing data on things like traffic, public transport, industrial sites, building locations and population density into a mathematical model that would predict the expected environmental noise level at any point. The model divided the area up into 10m squares and predicted _Leq_ (_equivalent continuous sound pressure level_) at a point 4m above the ground in the centre of each of those squares. The noise contours on the map are then calculated from those predictions. There is also a separate map that shows just the predicted night-time noise levels:
 
-So the map shows the average noise level I should _expect_ to experience in a particular location on a typical day (provided I happen to be floating 4m above ground level, of course). That's relatively straightforward, but how useful is it?
+![Central Edinburgh night-time noise map](measuring-noise02.png)
+
+So the maps show the average typical noise levels I should _expect_ to experience in a particular location (provided I happen to be floating 4m above ground level, of course). That's relatively straightforward, but how useful are they?
 
 This next bit gets rather mathematical, so feel free to skip past it if you're not that way inclined, but it does help to explain why thinking about sound levels is not straightforward.
 
@@ -106,32 +108,63 @@ For testing, I simply set up PicoDeeBee next to an open window in my flat and le
 
 ## Looking at the test data
 
+![Test location noise levels on a typical weekday](measuring-noise03.png)
 
+Above is a plot of a typical weekday's data. The dark line is _L~eq~,1 min_, the average sound level recorded each minute, while the grey area behind it shows the minimum and maximum sound levels in the same period.
 
-Above is a plot of a typical weekday's data. The first thing to notice is how … er … "noisy" it is. The sound levels vary wildly over time, even when averaged over minute-long periods. The minimum and maximum sound levels for each minute are also very variable. Now have a look at the next plot:
+The main thing to notice is how … er … "noisy" it is. The sound levels vary quite widely over time, even when averaged over minute-long periods. The minimum and maximum sound levels for each minute are also very variable. Now have a look at the next plot:
 
-This is 4 week's worth of data combined and summarised using the techniques described above. The  _L~eq~,1 min_ line still has a fair bit of variation, but it is now possible to pick out some general trends: the relative quiet of the early morning is lost from around 5-6am as the traffic of the morning rush-hour rises to peak at about 8am and then the noise level stays relatively steady through the rest of the day before tailing off slightly in the late evening.
+![Test location average noise levels over 12 days](measuring-noise-04.png)
 
-The horizontal lines on the graph show the corresponding _L~day~_, _L~evening~_, and _L~night~_ values calculated from the data, as well as the combined _L~DEN~_ measurement used in the END mapping. Here are the exact figures:
+This is 12 day's worth of data combined and summarised using the techniques described above. The  _L~eq~,1 min_ line still has a fair bit of variation, but it is now possible to pick out some general trends: the relative quiet of the early morning is lost from around 5am onwards as the traffic of the morning rush-hour rises to a peak between 7-8am and then the noise level stays relatively steady through the rest of the day before tailing off slightly in the late evening. Nevertheless, these changes are fairly modest --- the noise level stays broadly within the same small range of values throughout the whole day and night.
 
-|              | Start | End   | Duration | Penalty |
-| ------------ | ----- | ----- | -------- | ------- |
-| _L~day~_     | 07:00 | 19:00 | 14 hours | +0 dB   |
-| _L~evening~_ | 19:00 | 23:00 | 4 hours  | +5 dB   |
-| _L~night~_   | 23:00 | 07:00 | 8 hours  | +10 dB  |
+The coloured horizontal lines on the graph show the corresponding _L~day~_, _L~evening~_, and _L~night~_ values calculated from the data, as well as the combined _L~DEN~_ measurement used in the END mapping. Here are the exact figures:
 
-## Finding the bin lorry in the haystack
+|              | Measured    | Predicted     |
+| ------------ | ----------- | ------------- |
+| _L~day~_     | 56.9 dB     |               |
+| _L~evening~_ | 56.2 dB     |               |
+| _L~night~_   | 55.3 dB     | 55-60 dB      |
+| **_L~DEN~_** | **62.0 dB** | **60--65 dB** |
 
-Most mornings, at some time between 6am and 7am, there is a noisy lorry that comes along my street to empty rubbish bins. It wakes me up so often, I've started calling it my morning [Reveille](https://www.youtube.com/watch?v=8r5Ieh0OuQY). If I can demonstrate the effect of the morning bin lorry in the test data, then I should be able to do the same for the residents on the bus-blighted street.
+It's interesting to see how the combined _L~DEN~_ figure is more than 5dB _higher_ than the actual daytime noise level. This rather artificial inflation of the combined figure over its measured components is due to the penalties for evening and night-time noise that are applied in the _L~DEN~_ calculation, and can seem rather counter intuitive. It will happen anywhere there is relatively little variation between the daytime and night-time noise levels.
+
+The noise maps of Edinburgh predict that I should experience an _L~DEN~_ of 60--65 dB and an _L~night~_ of 55--60 dB, which turn out to be pretty accurate estimates of the actual noise levels at my location. 
+
+## Losing the bin lorry in the haystack
+
+Most mornings, at some time between 6am and 7am, there is a noisy lorry that comes along my street to empty rubbish bins. It wakes me up so often, I've started calling it my morning [Reveille](https://www.youtube.com/watch?v=8r5Ieh0OuQY). If I can demonstrate the effect of the morning bin lorry in the test data, then I should be able to do the same for the residents I want to help on the bus-blighted street.
 
 Well, looking at the graphs above, can _you_ spot the bin lorry noise?
 
 No, I can't either.
 
-The huge amount of minute-to-minute variation in the _L~eq~_ values swamps any daily trends, and hides the specific noise events I'm looking for.
+The huge amount of minute-to-minute variation in the _L~eq~_ values swamps any daily trends, and hides the specific noise events I'm looking for. Unfortunately, even looking at the minimum and maximum sound levels doesn't really help. The  _L~min~_ levels show that the noise floor is definitely quieter at night, but what is perhaps surprising is how high the  _L~max~_ levels can be right through the nighttime and early morning. Noise events of 80 and even 90 dB can apparently happen at any time of night and yet somehow I manage to sleep through them! I still can't see the effect of the bin lorry that actually wakes me up, though.
 
-So if I can't even spot the bin lorry that wakes me up in my test data, how can I demonstrate the effects of the passing buses for the bleary-eyed people in the street nearby?
+So if I can't even spot the bin lorry in my test data, how will I be able to demonstrate the effects of the passing buses for the bleary-eyed people in the street nearby? Well, I thought I would give it a try anyway.
+
+## Sounding out the street
+
+Here is a chart of the data from the sample location on the neighbours' street. The data were collected in the same way and over a similar time period to my test data:
+
+![Sample location average noise levels over 13 days](measuring-noise-05.png)
+
+|              | Measured     | Predicted    |
+| ------------ | ------------ | ----------- |
+| _L~day~_     | 73.0 dB      ||
+| _L~evening~_ | 69.4 dB      ||
+| _L~night~_   | 65.2 dB      |55-60 dB|
+| **_L~DEN~_** | **74.1 dB**  |**65--70 dB**|
+
+While the broad shape of the graph is similar to my test data, the most striking thing to notice is the generally higher levels of noise throughout the day and night. It is at least 10 dB louder at any time of day than in my own location --- which, bearing in mind the logarithmic nature of deciBel values, makes it a _much_ noisier street --- no wonder the residents are upset!
+
+Looking at the graph in more detail, you can see that daytime average noise levels are consistently above 70 dB between 7am and 9pm. The minimum sound level rarely drops below 50 dB and the maximum can sometimes go above 100 dB during the day. Even at night, the average sound level stays well above 60 dB and there are frequent maxima of 85--90 dB.
+
+There is a greater change in noise levels between day and night, which means that the overall _L~DEN~_ is not so much higher than the actual daytime noise level --- the artificial penalties added to evening and night-time noise don't end up exaggerating the combined figure as much as they do in my case.
+
+Perhaps most concerning, though, is that the measured values of _L~DEN~_ and  _L~night~_ are well above the ranges predicted by the European Noise Directive maps. This means that the local authority will have underestimated the detrimental health effects of traffic noise on the residents in this street. 
+
+
 
 Perhaps the issue is that I've been trapped into thinking about _average_ noise over long periods in the same way as the END maps consider it.  But the sorts of sounds that might wake a person up tend to be sudden and changeable, rather than continuous and average.
 
-Unfortunately, even looking at the minimum and maximum sound levels doesn't really help. The  _L~min~_ levels show that the noise floor is definitely quieter at night, but what is perhaps surprising is how high the  _L~max~_ levels can be right through the nighttime and early morning. Noise events of 80 and even 90 dB can apparently happen at any time of night and yet somehow I manage to sleep through them! I still can't see the effect of the bin lorry that actually wakes me up, though.
