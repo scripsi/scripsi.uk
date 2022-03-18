@@ -1,6 +1,6 @@
 # Measuring Noise
 
-Cities are noisy places — I know, because I live in the middle of one — but what is _unreasonable_ noise? That was the question I wanted to try and answer for residents of a nearby street who were being woken up in the early mornings by the noise of buses leaving a depot to reach the start of their routes. I had to find a way to measure noise to a reasonably high standard using cheap and relatively simple equipment, but that turned out to be the easy bit. Much more difficult was then understanding what I had measured and demonstrating what it meant. I'm still not sure if I've succeeded, but read on and see what _you_ think!
+Cities are noisy places — I know, because I live in the middle of one — but what is _unreasonable_ noise? That was the question I wanted to try and answer for residents of a nearby street who were being woken up in the early mornings by the noise of buses leaving a depot to reach the start of their routes. I had to find a way to measure noise to a reasonably high standard using cheap and relatively simple equipment, but that turned out to be the easy bit. Much more difficult was then understanding what I had measured and demonstrating what it meant. I'm think I've succeeded, at least in part, but read on and see what _you_ think!
 
 ## What is noise?
 
@@ -12,7 +12,7 @@ Finding a way to wrap all that complexity up into a single definition of "noise"
 
 ## The END of noise
 
-In response to [World Health Organisation guidelines](https://www.euro.who.int/en/health-topics/environment-and-health/noise) about the negative health impacts of noise, the European Parliament passed the [Environmental Noise Directive](https://ec.europa.eu/environment/noise/directive_en.htm) (END). This required member states to consider the impacts of noise on people and take steps to mitigate those impacts where they were excessive. It created a framework for how authorities should determine, communicate and reduce the effects of environmental noise. In Scotland, the result was a website, [Scotland's Noise](https://noise.environment.gov.scot/index.html), which maps the expected noise levels in the main population centres ("agglomerations") across the country. Here's what it looks like for central Edinburgh, where I live:
+In response to a World Health Organisation report about the negative health impacts of noise, the European Parliament passed the [Environmental Noise Directive](https://ec.europa.eu/environment/noise/directive_en.htm) (END). This required member states to consider the impacts of noise on people and take steps to mitigate those impacts where they were excessive. It created a framework for how authorities should determine, communicate and reduce the effects of environmental noise. In Scotland, the result was a website, [Scotland's Noise](https://noise.environment.gov.scot/index.html), which maps the expected noise levels in the main population centres ("agglomerations") across the country. Here's what it looks like for central Edinburgh, where I live:
 
 ![Central Edinburgh daytime noise map](measuring-noise01.png)
 
@@ -44,7 +44,7 @@ L = Log_{10}\left(\frac{P}{P_0}\right) B = 10 Log_{10}\left(\frac{P}{P_0}\right)
 
 Here are some examples of approximate sound levels:
 
-| Sound                       | Pressure   | Bels | Decibels |
+| Sound                       | Pressure   | Bels | deciBels |
 | --------------------------- | ---------- | ---- | -------- |
 | Threshold of hearing        | 0.00002 Pa | 0 B  | 0 dB     |
 | Leaves rustling, whispering | 0.0002 Pa  | 2 B  | 20 dB    |
@@ -98,21 +98,21 @@ Once again, we have to do the same logarithmic conversions when calculating _L~D
 L_{DEN} = 10 Log_{10}\left({\frac{14}{24}10^\left(\displaystyle \frac{L_{day}}{10}\right) + \frac{4}{24}10^\left(\displaystyle \frac{L_{evening}+5} {10}\right) + \frac{8}{24}10^\left(\displaystyle \frac{L_{night}+10}{10}\right)}\right) dB
 \]
 
-Finally I have a single number that is supposed to express the level of environmental noise in a particular location over the course of a whole day. In fact, the noise map that I included earlier is showing the predicted _L~DEN~_ levels for the different points on the map. To check if the map is realistic for any location, I just need to make three measurements of noise over different daily time periods and feed them into this formula.
+Finally I have a single number that is supposed to express the level of environmental noise in a particular location over the course of a whole day. In fact, the first of the noise maps that I included earlier shows the predicted _L~DEN~_ levels for different locations, while the second map does the same for _L~night~_ levels only. To check if the map is realistic for any location, I just need to make three measurements of noise over different daily time periods and feed them into this formula.
 
 ## Practical noise measurement on a budget
 
 Professional integrating sound pressure level meters, that can log noise levels over time to measure _L~eq~_, cost many hundreds or even thousands of pounds — well beyond the means of my simple project. Much cheaper, simpler devices are available that can give reasonably accurate spot measurements of noise levels, and I was able to modify one of these to allow me to log the measurements over time. The full details of the "PicoDeeBee" meter will be available on my [GitHub page](https://github.com/scripsi), but in essence it is a cheap, generic model of decibel meter adapted to provide an output to a tiny microcontroller that records the timestamped data to a spreadsheet file which can be downloaded over USB. The total cost of the components is about 35 GBP.
 
-The sound meter measures A-weighted (i.e. tuned to the same frequency sensitivity as the human ear) sound pressure levels and converts them to decibel readings at a rate of 6 times per second. These decibel levels are output as a voltage which is detected and recorded by the microprocessor. Because of limited storage space, I've programmed the microprocessor to calculate the equivalent continuous sound level from the combined individual readings over the course of a minute, and save _L~eq~,1 min_ measurements to the data file. It also records the maximum and minimum sound readings, _L~max~_ and _L~min~_, for each minute. A battery-backed clock ensures that the timestamps of each measurement are reasonably accurate. Set up like this, the meter can be left running for days or weeks at a time before the data are copied off and analysed.
+The sound meter measures A-weighted (i.e. tuned to the same frequency sensitivity as the human ear) sound pressure levels and converts them to decibel readings at a rate of 6 times per second. These decibel levels are output as a voltage which is detected and recorded by the microprocessor. Because of limited storage space, I've programmed the microprocessor to calculate the equivalent continuous sound level from the combined individual readings over the course of a minute, and save _L~eq~,1 min_ measurements to the data file. It also records the maximum and minimum sound readings, _L~max~_ and _L~min~_, for each minute. A battery-powered clock ensures that the timestamps of each measurement are reasonably accurate. Set up like this, the meter can be left running for days or weeks at a time before the data are copied off and analysed.
 
-For testing, I simply set up PicoDeeBee next to an open window in my flat and left it running for a total of about two weeks to record the noise levels on my street. Since my flat is on an upper floor, the position of the meter roughly matched the 4m height used in the noise mapping, and so it should enable a useful comparison with with the modelled data.
+For testing, I simply set up PicoDeeBee next to an open window in my flat and left it running for about two weeks to record the noise levels on my street. Since my flat is on an upper floor, the position of the meter roughly matched the 4m height used in the noise mapping, and so it should enable a useful comparison with with the modelled data.
 
 ## Looking at the test data
 
 ![Test location noise levels on a typical weekday](measuring-noise03.png)
 
-Above is a plot of a typical weekday's data. The dark line is _L~eq~,1 min_, the average sound level recorded each minute, while the grey area behind it shows the minimum and maximum sound levels in the same period.
+Above is a plot of a typical weekday's data. The dark line is _L~eq~,1 min_, the average sound level recorded each minute, while the grey area behind it shows the range of minimum and maximum sound levels in the same period.
 
 The main thing to notice is how … er … "noisy" it is. The sound levels vary quite widely over time, even when averaged over minute-long periods. The minimum and maximum sound levels for each minute are also very variable. Now have a look at the next plot:
 
@@ -158,15 +158,25 @@ Here is a chart of the data from the sample location on the neighbours' street. 
 | _L~night~_   | 65.2 dB      |55-60 dB|
 | **_L~DEN~_** | **74.1 dB**  |**65--70 dB**|
 
-While the broad shape of the graph is similar to my test data, the most striking thing to notice is the generally higher levels of noise throughout the day and night. It is at least 10 dB louder at any time of day than in my own location --- which, bearing in mind the logarithmic nature of deciBel values, makes it a _much_ noisier street --- no wonder the residents are upset!
+While the broad shape of the graph is similar to my test data, the most striking thing to notice is the generally higher levels of noise throughout the day and night. It is at least 10 dB louder at any time of day than in my own location, which --- bearing in mind the logarithmic nature of deciBel values --- makes it a _much_ noisier street. No wonder the residents there are upset!
 
-Looking at the graph in more detail, you can see that daytime average noise levels are consistently above 70 dB between 7am and 9pm. The minimum sound level rarely drops below 50 dB and the maximum can sometimes go above 100 dB during the day. Even at night, the average sound level stays well above 60 dB and there are frequent maxima of 85--90 dB.
+Looking at the graph in more detail, you can see that daytime average noise levels are consistently above 70 dB between 7am and 9pm. The minimum sound level rarely drops below 50 dB and the maximum can sometimes go above 100 dB during the day. Even at night, the average sound level stays well above 60 dB and there are frequent maxima of 85--90 dB. However, there is a greater absolute change in noise levels between day and night than in my test data, which means that the overall _L~DEN~_ is not so much higher than the actual daytime noise level --- the artificial penalties added to evening and night-time noise don't end up exaggerating the combined figure as much as they do at my own location.
 
-There is a greater change in noise levels between day and night, which means that the overall _L~DEN~_ is not so much higher than the actual daytime noise level --- the artificial penalties added to evening and night-time noise don't end up exaggerating the combined figure as much as they do in my case.
+## Missing the bus but getting there in the END
 
-Perhaps most concerning, though, is that the measured values of _L~DEN~_ and  _L~night~_ are well above the ranges predicted by the European Noise Directive maps. This means that the local authority will have underestimated the detrimental health effects of traffic noise on the residents in this street. 
+A particular issue at the sample location is apparently the noise from early morning convoys of buses leaving a nearby depot to start their daytime services. Thirty or forty buses rumble down the street every day between about 4am and 7am, causing a significant noise nuisance for residents trying to get a good night's sleep. Unfortunately, the data I've collected don't really demonstrate this effect. The average noise level gradually increases throughout the early morning, just as it does at my own location --- there's no obvious sign of the increased nuisance from the passing buses.
 
+I'm not really sure why that is, but it may be something to do with the way my sound meter averages sound levels over 1-minute intervals: each bus will take much less than a minute to go past, so perhaps the resolution isn't fine enough to pick out these individual noise events. Nevertheless, I would have thought that the cumulative noise of so many passing buses would have had a more obvious overall effect on the data.
 
+There is still plenty of cause for concern, though. The World Health Organisation produced updated guidance for European environmental noise levels in 2018, and to quote from the [executive summary](https://www.euro.who.int/__data/assets/pdf_file/0009/383922/noise-guidelines-exec-sum-eng.pdf):
 
-Perhaps the issue is that I've been trapped into thinking about _average_ noise over long periods in the same way as the END maps consider it.  But the sorts of sounds that might wake a person up tend to be sudden and changeable, rather than continuous and average.
+> For average noise exposure, the Guideline Development Group (GDG) strongly recommends reducing noise levels produced by road traffic below 53 decibels (dB) _L~DEN~_ , as road traffic noise above this level is associated with adverse health effects.
+>
+> For night noise exposure, the GDG strongly recommends reducing noise levels produced by road traffic during night time below 45 dB _L~night~_ , as night-time road traffic noise above this level is associated with adverse effects on sleep.
+>
+> To reduce health effects, the GDG strongly recommends that policy-makers implement suitable measures to reduce noise exposure from road traffic in the population exposed to levels above the guideline values for average and night noise exposure. For specific interventions, the GDG recommends reducing noise both at the source and on the route between the source and the affected population by changes in infrastructure.
+
+The measured values of 74.1dB _L~DEN~_ and 65.2 dB _L~night~_ at the sample location are very much higher than these recommended limits, and they are even well above the ranges predicted by the _Scotland's Noise_ maps. So my data strongly suggest that the residents on this street are likely to be suffering significant adverse health effects due to environmental noise. Local authorities may have underestimated the strength of these health effects, because of the difference between the predicted and actual noise values.
+
+I very much hope that this simple study will prompt further investigations into the causes of the high environmental noise levels and lead to solutions that can finally provide the residents with some relief!
 
